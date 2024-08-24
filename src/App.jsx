@@ -28,7 +28,6 @@ function App() {
   async function createNew() {
     const mn = await generateMnemonic();
     setMnemonic(mn);
-    console.log(mn);
   }
 
   async function createWallet() {
@@ -38,9 +37,10 @@ function App() {
       const derivedSeed = derivePath(path, seed.toString("hex")).key;
       const secret = nacl.sign.keyPair.fromSeed(derivedSeed).secretKey;
       const keypair = Keypair.fromSecretKey(secret);
-      console.log(keypair.publicKey.toBase58());
-      console.log(keypair.secretKey.toString('hex'))
-      setKeys([...keys, [keypair.secretKey.toString(), keypair.publicKey.toBase58()]]);
+      const secretKeyHex = Buffer.from(keypair.secretKey).toString('hex');
+
+      setKeys([...keys, [secretKeyHex, keypair.publicKey.toBase58()]]);
+
       setPublicKeys([...publicKeys, keypair.publicKey.toBase58()]);
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -52,18 +52,14 @@ function App() {
     <div className='container p-3'>
       <ToastContainer />
       <h2 className='text-center'>Create Wallet</h2>
-
-
       <div className="btncontainer">
         <button className='btn btn-primary' onClick={createNew}>Generate Mnemonic</button>
         <button onClick={createWallet} className='mx-2 btn btn-primary' disabled={!mnemonic}>
           Create New Wallet
         </button>
-
       </div>
       <div>
-
-        <div className="col-12 mt-5">
+        <div className="col-12 m-1">
           <div className="seed-phrase row">
             <div className="col-lg-3"></div>
             {mnemonic && (
@@ -87,17 +83,14 @@ function App() {
             )}
           </div>
         </div>
-
         {mnemonic ?
           <>
-            {/* <ul> */}
+            <h4>Solana Wallets</h4>
             {keys.map((p, index) => (
               <div key={index} className='mt-2'>
                 <Display publicKey={p[1]} privateKey={p[0]} />
               </div>
             ))}
-
-            {/* </ul> */}
           </> : ''}
       </div>
     </div>

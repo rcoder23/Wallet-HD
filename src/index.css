@@ -396,3 +396,7 @@ button.wallet-types {
     margin-block: 1rem;
   }
 }
+
+.publicKeyContainer {
+  display: flex;
+}
