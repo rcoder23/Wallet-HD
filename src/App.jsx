@@ -7,6 +7,7 @@ import Display from './components/Display';
 import { BsClipboard } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import bs58 from "bs58";
 
 function App() {
 
@@ -38,8 +39,13 @@ function App() {
       const secret = nacl.sign.keyPair.fromSeed(derivedSeed).secretKey;
       const keypair = Keypair.fromSecretKey(secret);
       const secretKeyHex = Buffer.from(keypair.secretKey).toString('hex');
+      console.log(secretKeyHex);
 
-      setKeys([...keys, [secretKeyHex, keypair.publicKey.toBase58()]]);
+      const hexBuffer = Buffer.from(secretKeyHex, 'hex');
+      const base58String = bs58.encode(hexBuffer);
+
+
+      setKeys([...keys, [base58String, keypair.publicKey.toBase58()]]);
 
       setPublicKeys([...publicKeys, keypair.publicKey.toBase58()]);
       setCurrentIndex(currentIndex + 1);
