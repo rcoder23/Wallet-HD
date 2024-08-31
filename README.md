@@ -13,6 +13,7 @@ This is a Vite+React application that allows users to generate a mnemonic phrase
 - **Mnemonic Generation**: Generate a secure mnemonic phrase.
 - **HD Wallet Generation**: Create multiple wallets from the generated mnemonic based on the BIP-32/39/44 standards.
 - **Balance Checker**: Check the balance of each wallet using the Solana blockchain.
+- **Money Transfer**: Transfer money to other account in solana.
 
 SS of project: 
 ![image](https://github.com/user-attachments/assets/8d95e4fc-d306-42dc-97d4-8d4b636eb88b)
